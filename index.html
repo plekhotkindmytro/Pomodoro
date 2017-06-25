@@ -15,39 +15,58 @@
     <section id="pomodoro">
         <div class="container">
             <div class="row">
-                <div class="col-6">
-                    <span id="break-minus">&minus;</span>
-                    <span id="break-value">5</span>
-                    <span id="break-plus">&plus;</span>
-                </div>
-                <div class="col-6">
-                    <span id="work-minus">&minus;</span>
-                    <span id="work-value">25</span>
-                    <span id="work-plus">&plus;</span>
+                <div class="col-12">
+                    <h1 class="display-4 mb-5">Pomodoro timer</h1>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div id="timer" class="work">
-                    <span id="timer-title">Session</span>
-                    <span id="timer-value">25</span>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div class='cup'>
-                    <div class='filled'></div>
-                </div>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-12">
-                <footer class="footer">
-                    Developed by <a href="https://plekhotkindmytro-portfolio.herokuapp.com">Dmytro Plekhotkin</a>
-                </footer>
+            <div class="row">
+                <div class="col-12">
+                    <div class="control-panel">
+                        <table class="break-panel">
+                            <tr>
+                                <td colspan="3">BREAK LENGTH</td>
+                            </tr>
+                            <tr class="break-panel-inputs">
+                                <td><span id="break-minus">&minus;</span></td>
+                                <td><span id="break-value">5</span></td>
+                                <td><span id="break-plus">&plus;</span></td>
+                            </tr>
+                        </table>
+                        <table class="work-panel">
+                            <tr>
+                                <td colspan="3">SESSION LENGTH</td>
+                            </tr>
+                            <tr class="work-panel-inputs">
+                                <td><span id="work-minus">&minus;</span></td>
+                                <td><span id="work-value">25</span></td>
+                                <td><span id="work-plus">&plus;</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="cup-wrapper">
+                        <div class='cup'>
+                            <div class='filled filled-work' id="timer">
+
+                                <span id="timer-title">Session</span>
+                                <span id="timer-value">25</span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <footer class="footer">
+                        Developed by <a href="https://plekhotkindmytro-portfolio.herokuapp.com">Dmytro Plekhotkin</a>
+                    </footer>
+                </div>
             </div>
         </div>
     </section>

@@ -48,8 +48,10 @@ function updateTimer() {
     }
 
     if (WORK_TIME_LEFT_MS > 0 && IS_WORK) {
-        $("#timer").removeClass("break");
-        $("#timer").addClass("work");
+        $("body").removeClass("break");
+        $("body").addClass("work");
+        $("#timer").removeClass("filled-break");
+        $("#timer").addClass("filled-work");
         $("#timer-title").text("Session");
         WORK_TIME_LEFT_MS -= 1000;
         setTimerText(WORK_TIME_LEFT_MS);
@@ -61,8 +63,10 @@ function updateTimer() {
         }
 
         IS_WORK = false;
-        $("#timer").removeClass("work");
-        $("#timer").addClass("break");
+        $("body").removeClass("work");
+        $("body").addClass("break");
+        $("#timer").removeClass("filled-work");
+        $("#timer").addClass("filled-break");
         $("#timer-title").text("Break!");
         BREAK_TIME_LEFT_MS -= 1000;
         setTimerText(BREAK_TIME_LEFT_MS);
@@ -81,8 +85,8 @@ function setTimerText(ms) {
     var hours = time.getUTCHours();
     var minutes = time.getUTCMinutes();
     var seconds = time.getUTCSeconds();
-    var text = (hours === 0 ? "" : hours + " : ");
-    text += minutes + " : " + seconds;
+    var text = (hours === 0 ? "" : hours + ":");
+    text += minutes + ":" + seconds;
     $("#timer-value").text(text);
 }
 
