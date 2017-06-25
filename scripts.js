@@ -9,10 +9,10 @@ $(document).ready(function () {
     WORK_TIME_LEFT_MS = Number($("#work-value").text()) * 60 * 1000;
     BREAK_TIME_LEFT_MS = Number($("#break-value").text()) * 60 * 1000;
 
-    $("#work-minus").on("click", update("#work-value", decrease))
-    $("#work-plus").on("click", update("#work-value", increase))
-    $("#break-minus").on("click", update("#break-value", decrease))
-    $("#break-plus").on("click", update("#break-value", increase))
+    $("#work-minus").on("click", updateWork("#work-value", decrease))
+    $("#work-plus").on("click", updateWork("#work-value", increase))
+    $("#break-minus").on("click", updateBreak("#break-value", decrease))
+    $("#break-plus").on("click", updateBreak("#break-value", increase))
 
     $("#timer").on("click", timer);
 
@@ -49,6 +49,9 @@ function updateTimer() {
 
     if (WORK_TIME_LEFT_MS > 0) {
         IS_WORK = true;
+        $("#timer").removeClass("break");
+        $("#timer").addClass("work");
+        $("#timer-title").text("Session");
         WORK_TIME_LEFT_MS -= 1000;
         setTimerText(WORK_TIME_LEFT_MS);
     } else if (BREAK_TIME_LEFT_MS > 0) {
@@ -56,8 +59,11 @@ function updateTimer() {
         if (Number($("#break-value").text()) * 60 * 1000 === BREAK_TIME_LEFT_MS) {
             AUDIO.play();
         }
+        $("#timer").removeClass("work");
+        $("#timer").addClass("break");
+        $("#timer-title").text("Break!");
         BREAK_TIME_LEFT_MS -= 1000;
-        setTimerText(BREAK_TIME_LEFT_MS, false);
+        setTimerText(BREAK_TIME_LEFT_MS);
     } else {
         WORK_TIME_LEFT_MS = Number($("#work-value").text()) * 60 * 1000;
         BREAK_TIME_LEFT_MS = Number($("#break-value").text()) * 60 * 1000;
@@ -65,18 +71,17 @@ function updateTimer() {
     }
 }
 
-function setTimerText(ms, isWork) {
+function setTimerText(ms) {
     var time = new Date(ms);
     var hours = time.getUTCHours();
     var minutes = time.getUTCMinutes();
     var seconds = time.getUTCSeconds();
-    var text = IS_WORK ? "Work: " : "Break: ";
-    text += (hours === 0 ? "" : hours + " : ");
+    var text = (hours === 0 ? "" : hours + " : ");
     text += minutes + " : " + seconds;
-    $("#timer").text(text);
+    $("#timer-value").text(text);
 }
 
-function update(selector, updater) {
+function updateWork(selector, updater) {
     return function () {
         var oldValue, newValue;
         if (!CLOCK_ON) {
@@ -87,16 +92,30 @@ function update(selector, updater) {
                     $(selector).text(newValue);
 
                     if (IS_WORK) {
-                        $("#timer-wrapper").removeClass("timer-break");
-                        $("#timer-wrapper").addClass("timer-work");
-                        $("#timer-title").text("Session");
-                    } else {
-                        $("#timer-wrapper").removeClass("timer-work");
-                        $("#timer-wrapper").addClass("timer-break");
-                        $("#timer-title").text("Break!");
+                        $("#timer-value").text(newValue);
                     }
-
                     WORK_TIME_LEFT_MS = Number($("#work-value").text()) * 60 * 1000;
+
+                }
+            } else {
+                // refresh the page if you want to clear Pomodoro
+            }
+        }
+    }
+}
+
+function updateBreak(selector, updater) {
+    return function () {
+        var oldValue, newValue;
+        if (!CLOCK_ON) {
+            oldValue = Number($(selector).text());
+            if (oldValue !== 0) {
+                newValue = oldValue + updater();
+                if (valid(newValue)) {
+                    $(selector).text(newValue);
+                    if (!IS_WORK) {
+                        $("#timer-value").text(newValue);
+                    }
                     BREAK_TIME_LEFT_MS = Number($("#break-value").text()) * 60 * 1000;
                 }
             } else {

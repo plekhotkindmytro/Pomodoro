@@ -10,3 +10,11 @@ body {
 #work-plus {
     cursor: pointer;
 }
+
+.work {
+    background-color: greenyellow;
+}
+
+.break {
+    background-color: red;
+}
