@@ -47,24 +47,29 @@ function updateTimer() {
         return;
     }
 
-    if (WORK_TIME_LEFT_MS > 0) {
-        IS_WORK = true;
+    if (WORK_TIME_LEFT_MS > 0 && IS_WORK) {
         $("#timer").removeClass("break");
         $("#timer").addClass("work");
         $("#timer-title").text("Session");
         WORK_TIME_LEFT_MS -= 1000;
         setTimerText(WORK_TIME_LEFT_MS);
+
+        fillCoffee();
     } else if (BREAK_TIME_LEFT_MS > 0) {
-        IS_WORK = false;
-        if (Number($("#break-value").text()) * 60 * 1000 === BREAK_TIME_LEFT_MS) {
+        if (IS_WORK && Number($("#break-value").text()) * 60 * 1000 === BREAK_TIME_LEFT_MS) {
             AUDIO.play();
         }
+
+        IS_WORK = false;
         $("#timer").removeClass("work");
         $("#timer").addClass("break");
         $("#timer-title").text("Break!");
         BREAK_TIME_LEFT_MS -= 1000;
         setTimerText(BREAK_TIME_LEFT_MS);
+
+        drink();
     } else {
+        IS_WORK = true;
         WORK_TIME_LEFT_MS = Number($("#work-value").text()) * 60 * 1000;
         BREAK_TIME_LEFT_MS = Number($("#break-value").text()) * 60 * 1000;
         AUDIO.play();
