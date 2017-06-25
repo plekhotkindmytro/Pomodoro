@@ -83,9 +83,12 @@ function updateTimer() {
 function setTimerText(ms) {
     var time = new Date(ms);
     var hours = time.getUTCHours();
+    hours = hours < 10 ? "0" + hours : hours;
     var minutes = time.getUTCMinutes();
+    minutes = minutes < 10 ? "0" + minutes : minutes;
     var seconds = time.getUTCSeconds();
-    var text = (hours === 0 ? "" : hours + ":");
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+    var text = (hours === "00" ? "" : hours + ":");
     text += minutes + ":" + seconds;
     $("#timer-value").text(text);
 }
